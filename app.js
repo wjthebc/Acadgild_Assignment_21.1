@@ -30,7 +30,7 @@ var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
 
 //connects to MongoDB
-MongoClient.connect(url, function(err, db) {
+MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
   if (err) throw err;
   //specifies db
   var dbo = db.db("assignment");
@@ -51,7 +51,7 @@ MongoClient.connect(url, function(err, db) {
   });
 //deletes documents in the collection where designation = 'Developer'
   var myquery = { designation: 'Developer' };
-    dbo.collection("employees").remove(myquery, function(err, obj) {
+    dbo.collection("employees").deleteMany(myquery, function(err, obj) {
       if (err) throw err;
       console.log(obj.result.n + " document(s) deleted");
       db.close();
